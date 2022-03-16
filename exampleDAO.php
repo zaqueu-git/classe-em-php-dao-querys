@@ -50,9 +50,9 @@ class ExampleDAO
     public function create(string $name, int $age, string $description)
     {
         $sql = $this->dblocal->prepare("INSERT INTO people SET name = :name, age = :age, description = :description");
-        $sql->bindParam('name', $name, PDO::PARAM_STR);
-        $sql->bindParam('age', $age, PDO::PARAM_INT);
-        $sql->bindParam('description', $description, PDO::PARAM_STR);
+        $sql->bindParam(':name', $name, PDO::PARAM_STR);
+        $sql->bindParam(':age', $age, PDO::PARAM_INT);
+        $sql->bindParam(':description', $description, PDO::PARAM_STR);
 
         if ($sql->execute()) {
             if ($sql->rowCount() > 0) {
@@ -79,7 +79,7 @@ class ExampleDAO
     public function readById(int $id)
     {
         $sql = $this->dblocal->prepare("SELECT * FROM people WHERE id = :id");
-        $sql->bindParam('id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
 
         if ($sql->execute()) {
             if ($sql->rowCount() > 0) {
@@ -120,7 +120,7 @@ class ExampleDAO
         $offset = ($page-1) * $size;
 
         $sql = $this->dblocal->prepare("SELECT * FROM people WHERE id = :id LIMIT :offset, :size");
-        $sql->bindParam('id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
         $sql->bindValue(':offset', $offset, PDO::PARAM_INT);
         $sql->bindValue(':size', $size, PDO::PARAM_INT);
 
@@ -136,10 +136,10 @@ class ExampleDAO
     public function updateById(int $id, string $name, int $age, string $description)
     {
         $sql = $this->dblocal->prepare("UPDATE people SET name = :name, age = :age, description = :description WHERE id = :id");
-        $sql->bindParam('name', $name, PDO::PARAM_STR);
-        $sql->bindParam('age', $age, PDO::PARAM_INT);
-        $sql->bindParam('description', $description, PDO::PARAM_STR);
-        $sql->bindParam('id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':name', $name, PDO::PARAM_STR);
+        $sql->bindParam(':age', $age, PDO::PARAM_INT);
+        $sql->bindParam(':description', $description, PDO::PARAM_STR);
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
 
         if ($sql->execute()) {
             if ($sql->rowCount() > 0) {
@@ -153,7 +153,7 @@ class ExampleDAO
     public function deleteById(int $id)
     {
         $sql = $this->dblocal->prepare("DELETE FROM people WHERE id = :id");
-        $sql->bindParam('id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
 
         if ($sql->execute()) {
             if ($sql->rowCount() > 0) {
@@ -178,7 +178,7 @@ class ExampleDAO
     public function totalRecordsById(int $id)
     {
         $sql = $this->dblocal->prepare("SELECT COUNT(*) AS total FROM people WHERE id = :id");
-        $sql->bindParam('id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
 
         if ($sql->execute()) {
             return $sql->fetch(PDO::FETCH_OBJ);
@@ -201,7 +201,7 @@ class ExampleDAO
     public function sumRecordsById(int $id)
     {
         $sql = $this->dblocal->prepare("SELECT SUM(age) AS total FROM people WHERE id = :id");
-        $sql->bindParam('id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
 
         if ($sql->execute()) {
             return $sql->fetch(PDO::FETCH_OBJ);
