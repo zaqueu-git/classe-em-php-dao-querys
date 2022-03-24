@@ -37,7 +37,7 @@ class ConnectionDriver
     }
 }
 
-class ExampleDAO
+class ExampleDAOQuerys
 {
     private $dblocal;
 
